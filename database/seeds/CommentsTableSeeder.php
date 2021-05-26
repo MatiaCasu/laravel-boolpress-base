@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Comment;
-use Faker\Generator as Faker;
+use Faker\Generator as Faker; // Alias
 use App\Post;
 
 
@@ -22,7 +22,9 @@ class CommentsTableSeeder extends Seeder
             for ($i=0; $i < rand(0, 5); $i++) { 
                 $newComment = new Comment();
 
-                $newComment->author = $faker->name();
+                if (rand(0,1)) {
+                    $newComment->author = $faker->name();
+                }
                 $newComment->content = $faker->text();
                 $newComment->post_id = $post->id;    
 
