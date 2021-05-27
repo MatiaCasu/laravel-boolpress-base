@@ -1,12 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Http\Controllers\Controller;
+use App\Tag;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    //Validazioni in array globale
+    protected $validation = [
+        'content' => 'required|string',
+        'image' => 'nullable|url'
+    ];
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +24,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        //dd($posts);
-        return view('posts.index', ['posts' => $posts]);
+        $posts = Post::orderBy('updated_at','desc')->get();
+        return view('admin.posts.index', ['posts' => $posts]);
 
     }
 
@@ -27,7 +36,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::all();
+
+        return view('admin.posts.create', compact('tags'));
     }
 
     /**
@@ -38,7 +49,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = $this->validation;
+        $validation['title'] = 'required|string|max:255|unique:posts';
+        
+        $request->validate($validation);
+
+        $data = $request->all();
+
+        //public checkbox
+        $data['public'] = !isset($data['public']) ? 0 : 1;
+        
+        // slug
+        $data['slug'] = Str::slug($data['title'], '-');
+
+        $newPost = Post::create($data);    
+        
+        // tags
+        if( isset($data['tags']) ) {
+            $newPost->tags()->attach($data['tags']);
+        }
+
+        return redirect()->route('admin.posts.index');
     }
 
     /**

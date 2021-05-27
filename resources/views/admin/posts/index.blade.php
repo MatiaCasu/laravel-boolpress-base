@@ -14,10 +14,12 @@
 </head>
 <body>
     <h1>Boolpress</h1>
+    <a href="{{route('admin.posts.create')}}"><button type="button" class="btn btn-success">Aggiungi Post</button></a>
     @foreach ($posts as $post)
         <ul>
             <li><h2>Titolo: {{$post->title}}</h2></li>
             <li>Testo: {{$post->content}}</li>
+            <li><div>Pubblico:  {{$post->public}}</div></li>
         </ul>
         @if ($post->comments->isNotEmpty())
             <h5>Commenti</h5>
