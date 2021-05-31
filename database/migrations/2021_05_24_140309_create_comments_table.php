@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->string('author', 100)->nullable();
             $table->text('content');
 
-            $table->foreignId('post_id')->constrained();
+            $table->foreignId('post_id')->constrained()->onDelete('cascade');
         });
     }
 

@@ -27,10 +27,7 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('updated_at','desc')->get();
 
-        //dd($posts);
-
         return view('admin.posts.index', ['posts' => $posts]);
-
     }
 
     /**
@@ -84,7 +81,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //dd($post);
         return view('admin.posts.show', compact('post'));
     }
 

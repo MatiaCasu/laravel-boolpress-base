@@ -8,6 +8,7 @@
     <ul>
         <li>{{$post->content}}</li>
         <li><img src="{{$post->image}}" alt=""></li>
+        @if($post->tags->isNotEmpty())
         <li><h4>Tag</h4>
             <ul>
                 @foreach ($post->tags as $tag)
@@ -15,6 +16,7 @@
                 @endforeach
             </ul>    
         </li>
+        @endif
     </ul>
     @if ($post->comments->isNotEmpty())
         <h5>Commenti</h5>
