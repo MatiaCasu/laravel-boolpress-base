@@ -45,8 +45,13 @@
                 </div>
             @endforeach
         </div>
+        <div class="form-group">
+            <label for="date">Data</label>
+            <input type="date" class="form-control" id="date" name="date" placeholder="Date">
+        </div>
         <div class="mt-3">
             <button type="submit" class="btn btn-primary">Crea</button>
+            <a href="{{route('admin.posts.index')}}"><button type="button" class="btn btn-success mt-3">Home</button></a>
         </div>
     </form>
     

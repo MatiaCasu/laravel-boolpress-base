@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('slug')->unique();
             $table->text('content');
             $table->boolean('public')->default(0);
+            $table->date('date');
             $table->string('image')->nullable();
         });
     }
