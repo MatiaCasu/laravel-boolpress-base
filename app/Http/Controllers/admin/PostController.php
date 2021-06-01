@@ -7,6 +7,7 @@ use App\Post;
 use App\Http\Controllers\Controller;
 use App\Tag;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -14,7 +15,8 @@ class PostController extends Controller
     protected $validation = [
         'date' => 'required|date',
         'content' => 'required|string',
-        'image' => 'nullable|url'
+        'image' => 'nullable|max:2048'
+        //Validazioni mimer non riconoscono file jpg
     ];
 
 
@@ -57,11 +59,15 @@ class PostController extends Controller
 
         $data = $request->all();
 
-        //public checkbox
+        // checkbox
         $data['public'] = !isset($data['public']) ? 0 : 1;
         
         // slug
         $data['slug'] = Str::slug($data['title'], '-');
+
+        if( isset($data['image']) ) {
+            $data['image'] = Storage::disk('public')->put('images', $data['image']);
+        }
 
         $newPost = Post::create($data);    
         

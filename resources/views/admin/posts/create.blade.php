@@ -15,7 +15,7 @@
     </div>
     @endif
 
-    <form action="{{route('admin.posts.store')}}" method="POST">
+    <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('POST')
         <div class="form-group">
@@ -28,7 +28,9 @@
         </div>
         <div class="form-group">
             <label for="image">Immagine</label>
-            <input type="text" class="form-control" id="image" name="image" placeholder="Image" value="{{ old('image')}}">
+            <input type="file" id="image" name="image" placeholder="Image" value="{{ old('image')}}">
+
+            
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="public" name="public">
@@ -51,7 +53,7 @@
         </div>
         <div class="mt-3">
             <button type="submit" class="btn btn-primary">Crea</button>
-            <a href="{{route('admin.posts.index')}}"><button type="button" class="btn btn-success mt-3">Home</button></a>
+            <a href="{{route('admin.posts.index')}}"><button type="button" class="btn btn-success">Home</button></a>
         </div>
     </form>
     
